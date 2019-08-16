@@ -80,11 +80,13 @@ class UsersModuleTest extends TestCase
     /** @test */
     public function it_creates_a_new_user()
     {
-      //$this->withoutExceptionHandling();
+      $this->withoutExceptionHandling();
       $this->post('/usuarios/crear', [
         'name' => 'David',
         'email' => 'fernando@styde.net',
         'password' => '123456',
+        'bio' => 'Programador de Laravel y Vue.js',
+        'twitter' => 'https://twitter.com/sillence',
       ])->assertRedirect('usuarios/');
 
       /*->assertRedirect(route('users.index'));*/
@@ -98,6 +100,12 @@ class UsersModuleTest extends TestCase
         'name' => 'David',
         'email' => 'fernando@styde.net',
         'password' => '123456',
+      ]);
+
+      $this->assertDatabaseHas('user_profiles', [
+        'bio' => 'Programador de Laravel y Vue.js',
+        'twitter' => 'https://twitter.com/sillence',
+        'user_id' => User::findByEmail('fernando@styde.net')->id,
       ]);
     }
 

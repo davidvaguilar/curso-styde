@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\{User, UserProfile};
+use App\Http\Requests\CreateUserRequest;
+
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -63,17 +65,39 @@ class UserController extends Controller
     //return "Crear nuevo usuario";
   }
 
-  public function store(){
+  public function store(CreateUserRequest $request){
   //  $data = request()->all();
     //return redirect('usuarios/nuevo')->withInput();
-    $data = request()->validate([
+
+    /*$data = request()->validate([
       'name' => 'required',
       //'email' => 'required|email',
       'email' => ['required','email', 'unique:users,email'],
       'password' => ['required','between:6,14'],
+      'bio' => 'required',
+      'twitter' => 'url',
     ], [
       'name.required' => 'El campo nombre es obligatorio'
-    ]);
+    ]);*/
+    //User::createUser($data);
+
+    $request->createUser();
+
+
+
+    /*DB::transaction(function() use ( $data) {
+      $user = User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => bcrypt($data['password']),
+      ]);
+
+      $user->profile()->create([
+        'bio' => $data['bio'],
+        'twitter' => $data['twitter'],
+        'github' => 'https://github.com',
+      ]);
+    });*/
 
   /*  if(empty($data['name'])){
       return redirect('usuarios/nuevo')->withErrors([
@@ -81,11 +105,6 @@ class UserController extends Controller
       ]);
     }*/
     // $data = request()->only(['name','email', 'password']);
-    User::create([
-      'name' => $data['name'],
-      'email' => $data['email'],
-      'password' => bcrypt($data['password']),
-    ]);
 
     //return "Procesando Informacion";
     //return redirect('usuarios');

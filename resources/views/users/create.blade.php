@@ -22,9 +22,8 @@
           <div class="form-group">
             <label from="name">Nombre:</label>
             <input type="text" name="name" id="name" class="form-control" placeholder="Pedro Perez" value="{{ old('name') }}">
-            <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
             @if ($errors->has('name'))
-              <pre>{{ $errors->first('name') }}</pre>
+              <small id="nameHelp" class="form-text text-muted">{{ $errors->first('name') }}</small>
             @endif
           </div>
           <div class="form-group">
@@ -38,6 +37,15 @@
           <div class="form-group">
             <label from="password">Contraseña:</label>
             <input type="password" name="password" id="password" class="form-control" placeholder="Mayor a 6 caracteres">
+          </div>
+
+          <div class="form-group">
+            <label for="bio">Bio:</label>
+            <textarea name="bio" class="form-control" id="bio">{{ old('bio') }}</textarea>
+          </div>
+          <div class="form-group">
+            <label from="twitter">Twitter:</label>
+            <input type="text" name="twitter" id="twitter" class="form-control" placeholder="https://twitter.com/styde" value="{{ old('twitter') }}">
           </div>
 
           <button type="submit" class="btn btn-primary">Crear usuario</button>
